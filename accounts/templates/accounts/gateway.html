@@ -1,0 +1,61 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/gateway.css' %}">
+<form id="payment-form" action="{% url 'gateway' %}" method="post">
+    {% csrf_token %}
+    <input type="hidden" id="payment_response" name="payment_response" value="">
+
+    <button id="rzp-button1">Pay with Razorpay</button>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+        var options = {
+            "key": "rzp_test_DKAaLZT468BLfb", // Enter the Key ID generated from the Dashboard
+            "amount": "10000", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            "currency": "INR",
+            "name": "Career Scape",
+            "description": "Test Transaction",
+            "image": "https://example.com/your_logo",
+            "order_id": "{{data.id}}", //This is a sample Order ID. Pass the id obtained in the response of Step 1
+            "handler": function (response) {
+                // console.log(response)
+                document.getElementById('payment_response').value = JSON.stringify(response);
+                
+                // window.location.href = 'http://127.0.0.1:8000/success/'
+
+                document.getElementById('payment-form').submit()
+
+                // alert(response.razorpay_payment_id);
+                // alert(response.razorpay_order_id);
+                // alert(response.razorpay_signature)
+            },
+            "theme": {
+                "color": "#3399cc"
+            }
+        };
+        var rzp1 = new Razorpay(options);
+        rzp1.on('payment.failed', function (response) {
+            // console.log(response)
+            // alert(response.error.code);
+            document.getElementById('payment_response').value = JSON.stringify(response);
+
+            alert("Payment failed" + response.error.description);
+            document.getElementById('payment-form').submit()
+            // alert(response.error.source);
+            // alert(response.error.step);
+            // alert(response.error.reason);
+            // alert(response.error.metadata.order_id);
+            // alert(response.error.metadata.payment_id);
+        });
+        document.getElementById('rzp-button1').onclick = function (e) {
+            rzp1.open();
+            e.preventDefault();
+        }
+    </script>
+</form>
+
+
+{% endblock %}
+
+{% comment %} {'id': 'order_Nn4FcTfB0rWfmr', 'entity': 'order', 'amount': 10000, 'amount_paid': 0, 'amount_due': 10000, 'currency': 'INR', 'receipt': 'order_rcptid_12', 'offer_id': None, 'status': 'created', 'attempts': 0, 'notes': [], 'created_at': 1710601029} {% endcomment %}'

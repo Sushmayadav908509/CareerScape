@@ -1,0 +1,33 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/login.css' %}">
+
+<div class="login-main-container">
+    <div class="login-container">
+        <img id="back-img" src="https://images.pexels.com/photos/5989933/pexels-photo-5989933.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+        <div class="heading">Sign In</div>
+        <form action="" method="post" class="form">
+            {% csrf_token %}
+            <div class="input-container">
+                {{ form.email }}
+                {{ form.password }}
+
+                {% for error in form.email.errors %}
+                    <div class="error">{{ error }}</div>
+                {% endfor %}
+
+                {{ form.non_field_errors }}
+
+                {% for message in messages %} {# Display messages added via messages.error #}
+                    <div class="error">{{ message }}</div>
+                {% endfor %}
+            </div>
+            <span class="forgot-password"><a href="{% url 'password_reset' %}">Forgot Password ?</a></span>
+            <button class="login-button" type="submit" value="Sign In">Sign In</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

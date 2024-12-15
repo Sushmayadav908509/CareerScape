@@ -1,0 +1,34 @@
+<!-- JobHub\accounts\templates\accounts\user_profile.html -->
+{% extends "accounts/base.html" %}
+{% block content %}
+{% load static %}
+
+
+<h2>User Profile</h2>
+<form method="post">
+    {% csrf_token %}
+
+    {{ form.username.label_tag }}: {{ form.username }}<br>
+    {{ form.email.label_tag }}: {{ form.email }}<br>
+    {{ form.profile_picture.label_tag }}: {{ form.profile_picture }}<br>
+    {{ form.phone_number.label_tag }}: {{ form.phone_number }}<br>
+
+
+    {% if user.profile_type == "job_seeker" %}
+        {{ form.skills.label_tag }}: {{ form.skills }}<br>
+        {{ form.education.label_tag }}: {{ form.education }}<br>
+        {{ form.experience.label_tag }}: {{ form.experience }}<br>
+        {{ form.resume.label_tag }}: {{ form.resume }}<br>
+        
+    {% elif user.profile_type == "recruiter" %}
+        {{ form.company_name.label_tag }}: {{ form.company_name }}<br>
+        {{ form.company_website.label_tag }}: {{ form.company_website }}<br>
+        {{ form.linkedin_profile.label_tag }}: {{ form.linkedin_profile }}<br>
+    {% endif %}
+    
+
+
+    <button type="submit">Set Profile</button>
+</form>
+
+{% endblock %}

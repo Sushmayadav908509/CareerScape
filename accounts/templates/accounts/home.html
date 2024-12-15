@@ -1,0 +1,56 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/home.css' %}">
+
+<div class="home-container">
+    <img id="back-img" src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&dpr=1">
+    <div class="card" id="jobs">
+        <div class="card-content">
+            <p class="card-title">Discover Employment Opportunities</p>
+            <p class="card-para">Explore a range of job openings and career prospects</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-content" id="register">
+            <p class="card-title">Unlock Additional Features by Registering</p>
+            <p class="card-para">Access application and bookmarking tools as a Job Seeker, or create job postings as a
+                Recruiter</p>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-content" id="github">
+            <p class="card-title">Browse my GitHub Portfolio</p>
+            <p class="card-para">Explore my diverse range of projects hosted on GitHub</p>
+        </div>
+    </div>
+   
+</div>
+
+
+
+<script>
+    const jobs = document.getElementById('jobs');
+    const register = document.getElementById('register');
+    const github = document.getElementById('github');
+
+    jobs.addEventListener('click', () => {
+        window.location.href = '/jobs/'
+    });
+
+    register.addEventListener('click', () => {
+        window.location.href = '/register/'
+    });
+
+    github.addEventListener('click', () => {
+        window.location.href = 'https://github.com/Sushmayadav908509/Careerscape/tree/master'
+    });
+</script>
+
+{% endblock %}
+#success@razorpay
+#failure@razorpay

@@ -1,0 +1,81 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+{% load static %}
+
+
+<link rel="stylesheet" type="text/css" href="{% static 'accounts/css/jobs.css' %}">
+
+<div class="overlay" id="overlay" style="display: none;"></div>
+
+<div id="toastNotification" class="hidden">
+    <p id="toastMessage"></p>
+</div>
+
+<div class="sub-nav">
+    <div class="search-container">
+        <input required="" class="input" type="search" name="search" id="search" placeholder="Search Jobs">
+        <button type="button" class="search-button">Search</button>
+    </div>
+    <select id="sort-by">
+        <option style="display: none;">Sort-By</option>
+        <option value="today">Today</option>
+        <option value="newest">Newest</option>
+        <option value="oldest">oldest</option>
+    </select>
+</div>
+
+<div id="jobDescriptionDisplay" style="display: none;">
+    <button id="closeDescription">&times;</button>
+    <div id="jobDescriptionInfo" class="detail-desc"></div>
+</div>
+
+<div id="widgetContainer">
+    <div class="parent" id="parentContainer">
+        <div class="card">
+            <div class="content-box">
+                <span class="job-title"></span>
+                <i class="fa-regular fa-bookmark fa-xl" id="bookmark-button"></i>
+                <div class="card-content">
+                    <p id="company_name"></p>
+                    <p id="company_location"></p>
+                    <p id="salary"></p>
+                    <p id="job_types"></p>
+                </div>
+                <div class="job-buttons">
+                    <button class="see-more">See More</button>
+                    <button class="apply-now">Apply Now</button>
+                </div>
+            </div>
+            <div class="date-box">
+                <span class="month"></span>
+                <span class="date"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page-buttons">
+    <div class="button-container">
+        <button id="backButton"></button>
+    </div>
+    <div class="button-container">
+        <span id="page-number">1</span>
+    </div>
+    <div class="button-container">
+        <button id="nextButton"></button>
+    </div>
+</div>
+
+<span id="data" style="display: none;">{{ data }}</span>
+<span id="bookmarked_jobs" style="display: none;">{{ bookmarked_jobs|safe }}</span>
+
+
+<form id="bookmarkForm" method="POST" action="/bookmark/" style="display: none;">
+    {% csrf_token %}
+    <input type="hidden" id="bookmarkJobIdInput" name="job_id" value="">
+</form>
+
+<script src="https://kit.fontawesome.com/07257d7f3a.js" crossorigin="anonymous"></script>
+<script src="{% static 'accounts/js/jobs.js' %}"></script>
+
+{% endblock %}
